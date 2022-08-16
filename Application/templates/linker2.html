@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>CSS Template</title>
+<meta charset="utf-8">
+<meta name="viewport" Articles="width=device-width, initial-scale=1">
+
+<script src="https://apis.google.com/js/client.js?onload=init"></script>
+
+
+<script src="../js/jquery-3.2.1.min.js"></script>
+<script src="../js/pdfobject.min.js"></script>
+<script src="jquery.dotdotdot.js"></script>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Style the header */
+header {
+  background-color: #666;
+  padding: 30px;
+  text-align: center;
+  font-size: 35px;
+  color: white;
+}
+
+/* Container for flexboxes */
+section {
+  height: 800px;
+  display: -webkit-flex;
+  display: flex;
+}
+
+/* Style the navigation menu */
+relatedArticles {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  background: #ccc;
+  padding: 20px;
+}
+
+relatedQuestions {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  background: #ccc;
+  padding: 20px;
+}
+
+/* Style the list inside the menu */
+relatedArticles ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+/* Style the Articles */
+mainWindow {
+  height: 700px;
+  -webkit-flex: 3;
+  -ms-flex: 3;
+  flex: 5;
+  background-color: #f1f1f1;
+  padding: 10px;
+}
+
+/* Style the footer */
+footer {
+  background-color: #777;
+  padding: 10px;
+  text-align: center;
+  color: white;
+}
+
+
+/* Responsive layout - makes the menu and the Articles (inside the section) sit on top of each other instead of next to each other */
+@media (max-width: 600px) {
+  section {
+    -webkit-flex-direction: column;
+    flex-direction: column;
+  }
+}
+</style>
+</head>
+<body>
+
+
+<header contenteditable="true">
+  <h2>Media Linker</h2>
+</header>
+
+<section>
+  <relatedArticles>
+    <h1>Content List</h1>
+    <div id="contentList">
+      <ul id="listOfContent">
+        <li><a href="javascript:changeMainWindow('http://www.gcesystems.com/what-are-hydrocarbons/')">1) [Article] What is a hydrocarbon?</a></li>
+        <li><a href="javascript:changeMainWindow('https://pue.kar.nic.in//PUE.mp4">2) [Video] Hydrocarbon structure</a></li>
+        <li><a href="javascript:changeMainWindow('https://pue.kar.nic.in//PUE/PDF_files/recogn/ipu_qb/34_ch13.pdf')">3) [PDF] Hydrocarbon practice questions</a></li>
+      </ul>
+    </div>
+  </relatedArticles>
+  
+  <mainWindow>
+    <div id="mainWindow">
+      <embed id="mainWindowEmbed" type="text/html" src="snippet.html" width="100%" height="700px">
+    </div>
+  </mainWindow>
+
+  <relatedQuestions>
+    <h1>Related Questions</h1>
+        <div id="relatedQuestions">
+      <ul id="listOfRelatedQuestions">
+        <li><a href="#">[3428672523]What is Wurtz reaction?</a></li>
+        <li><a href="#">[3252345653]What types of reactions can alkenes undergo?</a></li>
+      </ul>
+    </div>
+    <h1>Related Videos</h1>
+    <div id="relatedVideos">
+      <ul id="listOfRelatedVideos">
+        <li><a href="#">Wurtz Reaction Mechanism</a><img src="http://img.youtube.com/vi/Em4fascApio/hqdefault.jpg" width="75%"></li>
+        <li><a href="javascript:changeMainWindow('https://www.analyzeyourchess.com')">Addition Reactions of Alkenes</a><img src="http://img.youtube.com/vi/83Is-rouV-U/hqdefault.jpg" width="75%"></li>
+      </ul>
+    </div>
+      <h1>Related Articles</h1>
+    <div id="relatedArticles">
+      <ul id="listOfRelatedArticles">
+        <li><a href="#">London</a></li>
+        <li><a href="#">Paris</a></li>
+        <a href="javascript:changeMainWindow('https://www.analyzeyourchess.com')">Tokyo</a>
+      </ul>
+    </div>
+  </relatedQuestions>
+
+</section>
+
+<footer>
+  <button type="button" onClick="alert('Importing Content');">Import Content</button>
+</footer>
+
+<script>
+  var mainWindowUrl = "https://www.bbc.co.uk/bitesize/guides/zshvw6f/revision/2";
+  document.getElementById("mainWindowEmbed").src = mainWindowUrl;
+
+  function findRelatedArticles() {
+    var ul = document.getElementById("listOfRelatedArticles");
+
+    var a = document.createElement('a');
+    var linkText = document.createTextNode("Shanghai");
+    a.appendChild(linkText);
+    a.title = "my title text";
+    a.href = "http://example.com";
+
+    var li = document.createElement('li');
+
+    li.appendChild(a);
+
+    ul.appendChild(li);    
+}
+
+function changeMainWindow(url){
+  document.getElementById("mainWindowEmbed").src = url;
+}
+
+findRelatedArticles();
+
+/*
+function findRelatedVideos(query){
+        function onClientLoad() {
+            gapi.client.load('youtube', 'v3', onYouTubeApiLoad);
+        }
+        
+        function onYouTubeApiLoad() {
+            gapi.client.setApiKey('AIzaSyCMgHM_nH4hktk95EgeQON-UbGer9mHJAM');
+        }
+         
+        
+        function search() {
+            alert("Searching")
+            //var query = document.getElementById('query').value;
+            var query = query;
+            
+            var request = gapi.client.youtube.search.list({
+                part: 'snippet',
+                q:query
+            });
+            
+            request.execute(onSearchResponse);
+        }
+        // Error Function doesn't execute?
+        function onSearchResponse(response) {
+            var responseString = JSON.stringify(response, '', 2);
+            document.getElementById('response').innerHTML = responseString;
+        }
+
+      search();
+}
+
+findRelatedVideos("vsauce");
+*/
+
+</script>
+
+</body>
+</html>
+
